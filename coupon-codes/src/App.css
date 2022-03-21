@@ -1,0 +1,39 @@
+body {
+  text-align: center;
+  font-family: sans-serif;
+}
+
+.Home {
+  margin: 2rem;
+}
+
+li {
+  list-style: none;
+  padding: 0.5rem;
+}
+.couponlist {
+  border: 1px solid black;
+  margin: 1rem;
+  border-radius: 7px;
+}
+.Link {
+  margin: 1rem;
+  border-radius: 7px;
+}
+a {
+  text-decoration: none;
+  color: black;
+  border: 1px solid brown;
+  padding: 0.5rem;
+}
+button {
+  background-color: white;
+  border: 1px solid brown;
+  margin: 1rem;
+  padding: 0.5rem;
+  border-radius: 7px;
+}
+
+input {
+  margin: 1rem;
+}
