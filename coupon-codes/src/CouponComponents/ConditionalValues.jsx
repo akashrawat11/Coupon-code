@@ -20,12 +20,12 @@ export default function ConditionalValues(props) {
  console.log(type);
  if (type === 'variable'){
      return <div>
-         <div>Discount percentage: <input type="text" onChange={discountHandler}/></div>
-         <div>Maximum discount amount availed: <input type="text" onChange={maxdiscountHandler}/></div>
+         <div>Discount percentage: <input type="text" onChange={discountHandler} value={props.discount}/></div>
+         <div>Maximum discount amount availed: <input type="text" onChange={maxdiscountHandler} value={props.maxdiscount}/></div>
      </div>
  }else{
     return <div>
-         <div>Discount amount: <input type="text" onChange={amountHandler}/></div>
+         <div>Discount amount: <input type="text" onChange={amountHandler} value={props.amount}/></div>
      </div> 
  }
 }

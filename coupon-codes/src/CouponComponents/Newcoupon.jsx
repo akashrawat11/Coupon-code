@@ -14,6 +14,12 @@ export default function Newcoupon(props) {
   const [message,setMessage] = useState();
   const typeChangeHandler = (e)=>{
     setType(e.target.value);
+    if(e.target.value === 'variable'){
+      setAmount("");
+    }else{
+      setDiscount("");
+      setMaxDiscount("");
+    }
   }
   const minamountHandler = (e)=>{
     setMinamount(e.target.value);
@@ -37,7 +43,7 @@ export default function Newcoupon(props) {
     setMaxDiscount(value);
   }
 
-  const createHandler = ()=>{
+  const createHandler = async ()=>{
     if (!validate()){
       setMessage('please enter correct values!!')
       return
@@ -59,9 +65,18 @@ export default function Newcoupon(props) {
       }
     }
     const url = 'http://localhost:4000/api/coupons';
-    fetch(url, options).then(resp=>{console.log('Data sent');})
-    props.addcoupon();
+    await fetch(url, options).then(resp=>{console.log('Data sent');})
+    props.setCoupons();
+    setMessage('Successfully Added!!')
+    setToEmpty();
+    }
 
+    const setToEmpty = ()=>{
+        setMinamount("");
+        setAmount("");
+        setDiscount("");
+        setMaxDiscount("");
+        console.log('called');
     }
 
 const validate = ()=>{
@@ -77,12 +92,18 @@ const validate = ()=>{
   if(startdate == null || enddate == null){
     return false;
   }
+  if(!isNaN(discount) && discount > 100){
+    return false;
+  }
+  if((!isNaN(maxdiscount) && maxdiscount > minamount) || (!isNaN(amount) && amount > minamount)){
+    return false;
+  }
   return true;
 }
 
   return (
     <div>
-        <div>Minimum amount needed for coupon: <input type="text" onChange={minamountHandler}/></div>
+        <div>Minimum amount needed for coupon: <input type="text" onChange={minamountHandler} value={minamount}/></div>
         <div>
           <select id='coupon-type' on onChange={typeChangeHandler}>
               <option value="variable" selected>Percentage Discount</option>
@@ -90,7 +111,8 @@ const validate = ()=>{
             </select>
         </div>
         <div>
-          <ConditionalValues type = {type} setAmount = {amountHandler} setDiscount = {discountHandler} setMaxDiscount = {maxdiscountHandler}></ConditionalValues>
+          <ConditionalValues type = {type} setAmount = {amountHandler} setDiscount = {discountHandler} setMaxDiscount = {maxdiscountHandler} 
+          discount={discount} maxdiscount={maxdiscount} amount={amount}></ConditionalValues>
         </div>
         <div>
           From <input type="date" onChange={startdateHandler}/> to <input type="date" onChange={enddateHandler}/>

@@ -4,7 +4,7 @@ import Couponlist from './CouponComponents/Couponlist';
 import Newcoupon from './CouponComponents/Newcoupon';
 import Home from './CouponComponents/Home';
 
-import { BrowserRouter as Router,Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router,Routes, Route, Navigate} from 'react-router-dom';
 import Calculateamount from './CouponComponents/Calculateamount';
 import { useState, useEffect } from 'react';
 
@@ -26,7 +26,8 @@ function App() {
       <Home></Home>
       <Routes>
         <Route path="/coupons" element = {<Couponlist coupons = {coupons}></Couponlist>} exact></Route>
-        <Route path="/create" element = {<Newcoupon addcoupon = {fetchCoupons}></Newcoupon>} exact></Route>
+        <Route path="/" element = {<Navigate replace to = "/coupons"/>}></Route>
+        <Route path="/create" element = {<Newcoupon setCoupons = {fetchCoupons}></Newcoupon>} exact></Route>
         <Route path="/getdiscount" element = {<Calculateamount coupons = {coupons}></Calculateamount>} exact></Route>
       </Routes>
     </Router>

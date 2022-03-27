@@ -17,19 +17,25 @@ export default function (props) {
         }
         setFinalAmount(amount);
         console.log(props.coupons);
+        let found = false;
         props.coupons.forEach(element => {
             if (couponCode == element.id){
                 const enddate = new Date(element.enddate);
                 const startdate = new Date(element.startdate);
                 const current = new Date();
+                found = true;
                 if(amount >= (+element.minamount) && current <= enddate && current >= startdate){
                     getFinalAmount(amount)
                     setMessage('')
                     return
+                }else{
+                    setMessage('Minimum amount criteria not met or date expired.')
                 }
             }
         });
+        if (!found){
         setMessage('Enter Correct Code!!')
+    }
     }
     const getFinalAmount = async(amount)=>{
         const url = `http://localhost:4000/api/amount?price=${amount}&code=${''+couponCode}`;
